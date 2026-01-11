@@ -53,11 +53,11 @@ body::before{
   flex:1; min-height:0;
   display:grid; grid-template-columns:1.75fr 1fr; gap:14px;
 }
-.col{min-height:0; display:flex; flex-direction:column; gap:6px}
+.col{min-height:0; display:flex; flex-direction:column; gap:12px}
 .card{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
   border:1px solid var(--border);
-  border-radius:18px;
+  border-radius: 80px 80px 18px 18px / 120px 120px 18px 18px;
   box-shadow:0 18px 55px var(--shadow);
   backdrop-filter:blur(10px);
   padding:12px 14px;
@@ -75,14 +75,14 @@ body::before{
 .pMeta{margin-top:8px; display:grid; gap:5px; color:rgba(235,235,250,.84); font-size:13px}
 .pFoot{margin-top:8px; color:rgba(215,215,235,.75); font-size:13px}
 .dennisImg{width:100%; max-width:220px; height:auto; display:block; filter:drop-shadow(0 16px 34px rgba(0,0,0,.70))}
-.voice{overflow:visible; flex:0 0 auto; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
-.log{width:100%; min-height:120px; max-height:240px; overflow:auto; padding:8px 10px; border-radius:12px; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.10);
+.voice{overflow:hidden; flex:1; min-height:0; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
+.log{width:100%; height:100%; min-height:0; overflow:auto; padding:8px 10px; border-radius:14px; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.10);
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.4}
 .whisper{color:rgba(205,205,230,.72); font-style:italic}
-.actionsCard{flex:0 0 auto; display:flex; flex-direction:column}
-.actions{margin-top:10px; display:flex; flex-direction:column; gap:10px; min-height:0; overflow:visible; padding-right:2px}
+.actionsCard{flex:1; min-height:0; display:flex; flex-direction:column}
+.actions{margin-top:10px; display:flex; flex-direction:column; gap:10px; min-height:0; overflow:auto; padding-right:2px}
 button{
-  width:100%; cursor:pointer; padding:9px 10px; border-radius:16px;
+  width:100%; cursor:pointer; padding:10px 12px; border-radius:16px;
   border:1px solid var(--border2);
   background:rgba(20,20,26,.78);
   color:var(--text); font-size:13px;
@@ -93,7 +93,7 @@ button:active{transform:translateY(0) scale(.99)}
 .toast{
   position:fixed; left:16px; bottom:16px; z-index:10;
   background:rgba(0,0,0,.72); border:1px solid rgba(255,255,255,.12);
-  border-radius:12px; padding:9px 10px; color:rgba(240,240,252,.92);
+  border-radius:14px; padding:10px 12px; color:rgba(240,240,252,.92);
   max-width: 560px; display:none;
 }
 @media (max-width:900px){
@@ -111,71 +111,17 @@ button:active{transform:translateY(0) scale(.99)}
   content:"";
   position:absolute;
   inset:0;
-  border-radius:18px;
+  border-radius: 80px 80px 18px 18px / 120px 120px 18px 18px;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.10),
     inset 0 -18px 40px rgba(0,0,0,.55),
     0 0 0 1px rgba(255,255,255,.06);
   pointer-events:none;
 }
-
-/* overlay: полный экран для "поесть" */
-.overlay{
-  position:fixed; inset:0; z-index:20;
-  display:flex; align-items:center; justify-content:center;
-  padding:24px;
-  background:rgba(0,0,0,.92);
-  backdrop-filter: blur(4px);
-  opacity:0; pointer-events:none;
-  transition:opacity .18s ease;
-}
-.overlay.on{opacity:1; pointer-events:auto;}
-.overlayInner{
-  max-width: 980px; width:100%;
-  text-align:center;
-}
-.overlayBig{
-  font-family:"Cormorant Garamond","IBM Plex Serif",serif;
-  font-size: clamp(34px, 6vw, 84px);
-  font-weight:700;
-  letter-spacing:.02em;
-  color:rgba(245,245,255,.96);
-  text-shadow: 0 0 24px rgba(255,255,255,.10), 0 12px 60px rgba(0,0,0,.85);
-}
-.overlaySmall{
-  margin-top:18px;
-  font-size: clamp(14px, 1.4vw, 18px);
-  color:rgba(220,220,235,.78);
-}
-.overlayFaint{
-  margin-top:10px;
-  font-size: 12px;
-  color:rgba(200,200,220,.55);
-}
-
-
-/* tightening spacing */
-.app{gap:8px}
-.grid{gap:10px}
-.col{gap:8px}
-.card{padding:10px 12px}
-.header{margin-bottom:0}
-.title{margin-bottom:2px}
-.subtitle{margin-top:2px}
-
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
-
-<div class="overlay" id="overlay" aria-hidden="true">
-  <div class="overlayInner">
-    <div class="overlayBig" id="overlayBig">—</div>
-    <div class="overlaySmall" id="overlaySmall"></div>
-    <div class="overlayFaint" id="overlayFaint"></div>
-  </div>
-</div>
-
 <main class="app">
   <header class="header">
     <div class="title">Он здесь</div>
@@ -186,17 +132,49 @@ button:active{transform:translateY(0) scale(.99)}
     <div class="col left">
       <div class="card current">
         <div class="label">Текущее</div>
+        <div class="value" id="activityName">—</div>
+        <div class="small">Осталось: <span id="activityLeft">—</span></div>
+        <div class="bar"><div id="activityBar" class="barInner"></div></div>
+      </div>
+
       <div class="card quote">
         <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+      </div>
+
+      <div class="card profile">
+        <div class="pTitle">Профиль</div>
+        <div class="profileGrid">
+          <div>
+            <div class="pName">Дэннис</div>
+            <div class="pQuote">«Я здесь.»</div>
+            <div class="pMeta">
+              <div><b>Хозяйка:</b> Ольга</div>
+              <div><b>Возраст:</b> навсегда 6 лет</div>
+                <div><b>Адрес:</b> Королева 4а</div>
+                <div><b>Безопасное место:</b> подушка возле головы хозяйки</div>
+            </div>
+            <div class="pFoot">Он не стал легче. Он остался.</div>
+          </div>
+          <div>
+            <picture>
+              <source srcset="images/dennis_angel.webp" type="image/webp">
+              <img class="dennisImg" src="images/dennis_angel.png" alt="Дэннис — ангел-кот">
+            </picture>
+          </div>
+        </div>
+      </div>
+
       <div class="card voice">
         <div class="pTitle">Голос Дэнниса</div>
-      <div class="card actionsCard">
-        <div class="pTitle">Действия</div>
+        <div id="log" class="log"></div>
+      </div>
     </div>
 
     <div class="col right">
-      <div class="card profile">
-        <div class="pTitle">Профиль</div>
+      <div class="card actionsCard">
+        <div class="pTitle">Действия</div>
+        <div id="actions" class="actions"></div>
+      </div>
     </div>
   </section>
 </main>
@@ -208,42 +186,6 @@ const activityNameEl = document.getElementById("activityName");
 const activityLeftEl = document.getElementById("activityLeft");
 const activityBarEl = document.getElementById("activityBar");
 const toast = document.getElementById("toast");
-const overlay = document.getElementById("overlay");
-const overlayBig = document.getElementById("overlayBig");
-const overlaySmall = document.getElementById("overlaySmall");
-const overlayFaint = document.getElementById("overlayFaint");
-
-
-function showOverlay(big, small="", faint="", ms=6500){
-  overlayBig.textContent = big;
-  overlaySmall.textContent = small;
-  overlayFaint.textContent = faint;
-  overlay.classList.add("on");
-  overlay.setAttribute("aria-hidden","false");
-  clearTimeout(showOverlay._t);
-  showOverlay._t = setTimeout(hideOverlay, ms);
-}
-function hideOverlay(){
-  overlay.classList.remove("on");
-  overlay.setAttribute("aria-hidden","true");
-}
-
-function triggerEat(){
-  // ломаем интерфейс на секунду: никакого прогресса, никакого "завершено"
-  const smallVariants = ["Больно.", "Не получается.", "Я хочу, но не могу."];
-  const faintVariants = ["", "", "Ты всё равно пробуешь."];
-  const small = smallVariants[Math.floor(Math.random()*smallVariants.length)];
-  const faint = faintVariants[Math.floor(Math.random()*faintVariants.length)];
-  showOverlay("Я не могу есть.", small, faint, 7600);
-
-  // лог: минимально, чтобы не превращалось в аттракцион
-  logLine("Поесть.", "whisper");
-  setTimeout(()=>logLine(small), 900);
-}
-
-
-// закрытие оверлея по клику (на всякий)
-overlay.addEventListener("click", hideOverlay);
 
 function showToast(t){
   toast.textContent = t;
@@ -270,17 +212,14 @@ function fmt(ms){
 const ACTIONS = [
   { name:"Лечь на колени", dur: 10_000, lines:["Ты тёплая.","Можно полежать?","Оля, я здесь."] },
   { name:"Погладить", dur: 4_000, lines:["Мне хорошо.","Я помню.","Я люблю тебя, Оля."] },
-  // сон: иногда — тоска по Оле
-  { name:"Лечь спать на подушку", dur: 20_000, lines:["Я здесь.","Мне хорошо.","Я сторожу сон."], miss:["Оля, я скучаю.","Я скучаю по тебе, Оля.","Оля… мне тебя не хватает."] },
-  // еда — полный экран, без прогресса и "завершено"
-  { name:"Поесть", kind:"eat" },
+  { name:"Лечь спать на подушку", dur: 20_000, lines:["Я здесь.","Мне хорошо.","Я сторожу сон."] },
+  { name:"Поесть", dur: 6_000, lines:["Больно.","Не получается.","Теперь можно."] },
 ];
 
 let current = null;
 let last = performance.now();
 
 function startAction(a){
-  if (a.kind === "eat"){ triggerEat(); return; }
   if (current){ logLine("Сначала закончи текущее.", "whisper"); return; }
   current = { ...a, left: a.dur, total: a.dur };
   activityNameEl.textContent = a.name;
@@ -297,14 +236,8 @@ function tick(now){
     const pct = (1 - (current.left/current.total))*100;
     activityBarEl.style.width = Math.min(100, Math.max(0,pct)) + "%";
     if (current.left <= 0){
-      // сон: иногда всплывает тоска по Оле
-      if (current.miss && Math.random() < 0.35){
-        const missLine = current.miss[Math.floor(Math.random()*current.miss.length)];
-        logLine(missLine);
-      } else if (current.lines && current.lines.length){
-        const line = current.lines[Math.floor(Math.random()*current.lines.length)];
-        logLine(line);
-      }
+      const line = current.lines[Math.floor(Math.random()*current.lines.length)];
+      logLine(line);
       logLine("Завершено: " + current.name + ".", "whisper");
       current = null;
       activityNameEl.textContent = "—";
