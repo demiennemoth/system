@@ -11,7 +11,7 @@ window.addEventListener('resize', resize);
 resize();
 
 let t = 0;
-const blobs = Array.from({length: 220}, () => ({
+const blobs = Array.from({length: 140}, () => ({
   x: Math.random()*1.2 - 0.1,
   y: Math.random()*0.9,
   r: 0.08 + Math.random()*0.22,
@@ -19,7 +19,10 @@ const blobs = Array.from({length: 220}, () => ({
   s: 0.002 + Math.random()*0.006
 }));
 
-function draw(){
+let lastDraw = 0;
+function draw(ts){
+  if (ts && ts - lastDraw < 33) { requestAnimationFrame(draw); return; }
+  lastDraw = ts || lastDraw;
   t += 0.0025;
   const w = c.width, h = c.height;
 
@@ -58,7 +61,7 @@ function draw(){
 
   requestAnimationFrame(draw);
 }
-draw();
+requestAnimationFrame(draw);
 
 // --- UI logic ---
 const actionsEl = document.getElementById("actions");
