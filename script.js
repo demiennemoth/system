@@ -152,6 +152,9 @@ const clockEl = $("#clock");
 const moneyEl = $("#money");
 const actionsEl = $("#actions");
 const logEl = $("#log");
+const activityNameEl = document.getElementById("activity-name");
+const activityLeftEl = document.getElementById("activity-left");
+const activityBarEl = document.getElementById("activity-bar");
 
 function d(text) {
   const p = document.createElement("div");
@@ -168,6 +171,14 @@ function fmtTime(h) {
   const mm = Math.round((h % 1) * 60)
     .toString()
     .padStart(2, "0");
+  return `${hh}:${mm}`;
+}
+
+function fmtHoursLeft(hours) {
+  if (!isFinite(hours)) return "—";
+  const totalMin = Math.max(0, Math.round(hours * 60));
+  const hh = String(Math.floor(totalMin / 60)).padStart(2, "0");
+  const mm = String(totalMin % 60).padStart(2, "0");
   return `${hh}:${mm}`;
 }
 
@@ -221,7 +232,25 @@ function renderStats() {
   });
 
   updateMoodVisuals();
+
+  // --- activity HUD ---
+  if (activityNameEl && activityLeftEl && activityBarEl) {
+    if (S.activity) {
+      document.body.dataset.activity = "on";
+      activityNameEl.textContent = S.activity.name;
+      activityLeftEl.textContent = fmtHoursLeft(S.activity.left);
+      const pct = S.activity.total ? (1 - (S.activity.left / S.activity.total)) * 100 : 0;
+      activityBarEl.style.width = `${clamp(pct, 0, 100)}%`;
+    } else {
+      document.body.dataset.activity = "off";
+      activityNameEl.textContent = "—";
+      activityLeftEl.textContent = "—";
+      activityBarEl.style.width = "0%";
+    }
+  }
+
 }
+
 
 // ---------- UI init ----------
 (function initUI() {
@@ -295,11 +324,12 @@ function onNewDay() {
 // ---------- Активности ----------
 function startActivity(a) {
   if (S.activity) {
+      document.body.dataset.activity = "on";
     d("Занят(а). Сначала закончи текущее.");
     return;
   }
-  S.activity = { key: a.key, name: a.name, left: a.dur, apply: a.apply };
-  d("Начал(а): " + a.name);
+  S.activity = { key: a.key, name: a.name, left: a.dur, total: a.dur, apply: a.apply };
+  d("Начал(а): " + a.name + ` (≈ ${fmtHoursLeft(a.dur)}).`);
 }
 
 function tick(dt) {
@@ -341,6 +371,7 @@ function tick(dt) {
   }
 
   if (S.activity) {
+      document.body.dataset.activity = "on";
     S.activity.left -= dt;
     if (S.activity.left <= 0) {
       S.activity.apply();
