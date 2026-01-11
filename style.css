@@ -11,20 +11,29 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{
+  margin:0;
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  overflow:hidden; /* без лишнего скролла */
+  background-color:#000;
+
+  /* Фон: земля (webp быстрее, png запасной) */
+  background-image: image-set(
+    url("images/soil.webp") type("image/webp"),
+    url("images/soil.png") type("image/png")
+  );
+  background-size: cover;          /* застилает весь экран */
+  background-position: center;     /* красиво центрирует */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 body{
   margin:0;
   color:var(--text);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   overflow:hidden; /* без лишнего скролла */
   background:#000;
-}
-
-/* фон-земля рисуется на canvas */
-#bgCanvas{
-  position:fixed;
-  inset:0;
-  z-index:-2;
 }
 
 .app{
@@ -198,4 +207,15 @@ button:active{transform:translateY(0) scale(.99)}
   .actions{ overflow:visible; }
   .profileGrid{ grid-template-columns: 1fr; }
   .profileArt{ justify-self:start; }
+}
+
+
+/* чуть притемняем, чтобы текст читался на фактуре */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.32);
+  pointer-events:none;
+  z-index:-1;
 }
