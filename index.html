@@ -54,7 +54,7 @@ body::before{
   display:grid; grid-template-columns:1.75fr 1fr; gap:14px;
 }
 .col{min-height:0; display:flex; flex-direction:column; gap:12px}
-.col.left{min-height:0; display:flex; flex-direction:column; gap:12px; overflow:auto; padding-right:4px}
+.col.left{overflow:auto; padding-right:4px}
 .card{
   position:relative;
   background:linear-gradient(180deg,var(--panel),var(--panel2));
@@ -138,6 +138,8 @@ button:active{transform:translateY(0) scale(.99)}
 }
 
 @media (max-width:900px){
+  .col.left{overflow:visible; padding-right:0}
+
   body{overflow:auto}
   .app{height:auto}
   .grid{grid-template-columns:1fr}
@@ -232,11 +234,6 @@ button:active{transform:translateY(0) scale(.99)}
 }
 /* -------------------------------------------------------------- */
 
-
-@media (max-width:900px){
-  .col.left{overflow:visible; padding-right:0}
-}
-
 </style>
 </head>
 <body>
@@ -256,18 +253,24 @@ button:active{transform:translateY(0) scale(.99)}
     <div class="col left">
       <div class="card profile">
         <div class="pTitle">Профиль</div>
-<div class="card current">
+
+      <div class="card current">
         <div class="label">Текущее</div>
+
+      <div class="card quote">
+        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+
+      
         <div class="value" id="activityName">—</div>
         <div class="small">Осталось: <span id="activityLeft">—</span></div>
         <div class="bar"><div id="activityBar" class="barInner"></div></div>
       </div>
 
-      <div class="card quote">
-        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+      
       </div>
 
-      <div class="profileGrid">
+      
+        <div class="profileGrid">
           <div>
             <div class="pName">Дэннис</div>
             <div class="pQuote">«Я здесь.»</div>
