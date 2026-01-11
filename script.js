@@ -2,12 +2,15 @@
 // --- Canvas clouds background (макет 3) ---
 const c = document.getElementById('cloudCanvas');
 const ctx = c.getContext('2d');
+const DPR = Math.min(window.devicePixelRatio || 1, 1.25);
+let RUN_BG = true;
 
 function resize(){
-  c.width = window.innerWidth * devicePixelRatio;
-  c.height = window.innerHeight * devicePixelRatio;
+  c.width = Math.floor(window.innerWidth * DPR);
+  c.height = Math.floor(window.innerHeight * DPR);
 }
 window.addEventListener('resize', resize);
+document.addEventListener('visibilitychange', () => { RUN_BG = !document.hidden; });
 resize();
 
 let t = 0;
@@ -21,6 +24,7 @@ const blobs = Array.from({length: 140}, () => ({
 
 let lastDraw = 0;
 function draw(ts){
+  if (!RUN_BG) { requestAnimationFrame(draw); return; }
   if (ts && ts - lastDraw < 33) { requestAnimationFrame(draw); return; }
   lastDraw = ts || lastDraw;
   t += 0.0025;
@@ -36,7 +40,7 @@ function draw(ts){
 
   ctx.save();
   ctx.globalCompositeOperation = 'lighter';
-  ctx.filter = `blur(${22*devicePixelRatio}px)`;
+  ctx.filter = `blur(${18*DPR}px)`;
 
   for (const b of blobs){
     const x = ((b.x + (t*b.s)) % 1.3) * w;
