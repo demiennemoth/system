@@ -41,7 +41,7 @@ body{
   height: calc(100vh - 20px);
   max-height: 760px;
   padding: clamp(40px, 5vh, 62px) clamp(22px, 4vw, 58px);
-  background-image: url("images/cloud_window.png");
+  background-image: image-set(url("images/cloud_window.webp") type("image/webp"), url("images/cloud_window.png") type("image/png"));
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain; /* не мылит PNG */
