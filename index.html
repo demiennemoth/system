@@ -5,59 +5,72 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Он здесь</title>
   <meta name="description" content="Он здесь — Дэннис.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_cloud_png.css">
 </head>
 
 <body>
-  <canvas id="cloudCanvas"></canvas>
+  <canvas id="cloudCanvas" aria-hidden="true"></canvas>
 
   <div class="wrap">
-    <header class="top">
-      <div class="title">
-        <div class="h1">Он здесь</div>
-        <div class="sub">Дэннис</div>
-      </div>
-    </header>
-
-    <main class="grid">
-      <section class="left">
-        <div class="card">
-          <div class="label">Текущее</div>
-          <div class="value" id="activity-name">—</div>
-          <div class="small">Осталось: <span id="activity-left">—</span></div>
-          <div class="bar"><div id="activity-bar" class="bar-inner" style="width:0%"></div></div>
+    <div class="cloud-window" role="application" aria-label="Он здесь — Дэннис">
+      <header class="top">
+        <div class="title">
+          <div class="h1">Он здесь</div>
+          <div class="sub">Дэннис</div>
         </div>
+      </header>
 
-        <div class="card quote" style="margin-top:14px">
-          <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
-        </div>
-
-        <div class="card profile" style="margin-top:14px">
-          <div class="pTitle">Профиль</div>
-          <div class="pName">Дэннис</div>
-          <div class="pQuote">«Я здесь.»</div>
-          <div class="pMeta">
-            <div><b>Хозяйка:</b> Ольга</div>
-            <div><b>Возраст:</b> навсегда 6 лет</div>
+      <main class="grid">
+        <section class="left">
+          <div class="card">
+            <div class="label">Текущее</div>
+            <div class="value" id="activity-name">—</div>
+            <div class="small">Осталось: <span id="activity-left">—</span></div>
+            <div class="bar"><div id="activity-bar" class="bar-inner" style="width:0%"></div></div>
           </div>
-          <div class="pFoot">Он не стал легче. Он остался.</div>
-        </div>
 
-        <div class="card" style="margin-top:14px">
-          <div class="pTitle">Лог</div>
-          <div id="log" class="log"></div>
-        </div>
-      </section>
+          <div class="card quote">
+            <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+          </div>
 
-      <aside class="right">
-        <div class="card">
-          <div class="pTitle">Действия</div>
-          <div id="actions" class="actions"></div>
-        </div>
-      </aside>
-    </main>
+          <div class="card profile">
+            <div class="pTitle">Профиль</div>
+
+            <div class="profile-grid">
+              <div class="profile-text">
+                <div class="pName">Дэннис</div>
+                <div class="pQuote">«Я здесь.»</div>
+
+                <div class="pMeta">
+                  <div><b>Хозяйка:</b> Ольга</div>
+                  <div><b>Возраст:</b> навсегда 6 лет</div>
+                </div>
+
+                <div class="pFoot">Он не стал легче. Он остался.</div>
+              </div>
+
+              <div class="profile-art" aria-hidden="true">
+                <img src="assets/dennis_angel.png" alt="Дэннис — ангел-кот" class="dennis-img">
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pTitle">Лог</div>
+            <div id="log" class="log" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <aside class="right">
+          <div class="card actions-card">
+            <div class="pTitle">Действия</div>
+            <div id="actions" class="actions"></div>
+          </div>
+        </aside>
+      </main>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script_cloud_png.js"></script>
 </body>
 </html>
