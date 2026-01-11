@@ -585,3 +585,40 @@ function randInt(a, b) {
 
 window.tick = tick;
 window.S = S;
+
+
+// ---------- Психологические триггеры ----------
+const EVENTS = [
+  { cond: s => s.stats.social < 20, text: "Ты слишком долго был один." },
+  { cond: s => s.stats.energy < 20, text: "Свет греет, но больше не лечит." },
+  { cond: s => s.stats.mood < 25, text: "Крылья помнят то, чего не было." },
+];
+
+function checkEvents() {
+  EVENTS.forEach(e => {
+    if (e.cond(S) && Math.random() < 0.1) {
+      log(e.text, "whisper");
+    }
+  });
+}
+
+// ---------- Выбор без правильного ответа ----------
+function applyConsequences() {
+  if (S.stats.energy < 30 && Math.random() < 0.2) {
+    S.stats.health -= 1;
+    log("Тело платит за выживание.", "whisper");
+  }
+  if (S.stats.social > 70 && Math.random() < 0.15) {
+    S.stats.mood -= 1;
+    log("Слишком много света. Он стирает.", "whisper");
+  }
+}
+
+// ---------- Переопределение тика ----------
+const _tick = tick;
+tick = function() {
+  _tick();
+  checkEvents();
+  applyConsequences();
+};
+
