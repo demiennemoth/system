@@ -1,154 +1,20 @@
-/* Windows 95 Dark Edition — тема */
-
-:root {
-  --w95-bg: #000;
-  --w95-window: #111;
-  --w95-window-light: #333;
-  --w95-window-dark: #000;
-  --w95-text: #e5e5e5;
-  --w95-title: #060612;
-  --w95-title-text: #f5f5f5;
-}
-
 body {
-  background: var(--w95-bg) !important;
-  color: var(--w95-text) !important;
-  font-family: "MS Sans Serif", Tahoma, sans-serif !important;
+  background:#000;
+  color:#e5e5e5;
+  font-family:"MS Sans Serif",Tahoma,sans-serif;
 }
-
-/* Основное окно */
-.max-w-5xl {
-  background: var(--w95-window) !important;
-  border-top: 2px solid var(--w95-window-light) !important;
-  border-left: 2px solid var(--w95-window-light) !important;
-  border-right: 2px solid var(--w95-window-dark) !important;
-  border-bottom: 2px solid var(--w95-window-dark) !important;
-  box-shadow: 3px 3px 0 #000 !important;
-}
-
-/* Тайтлбар */
-header {
-  background: var(--w95-title) !important;
-  color: var(--w95-title-text) !important;
-  border-bottom: 2px solid #000 !important;
-  padding: 4px 6px !important;
-  margin: -6px -6px 8px -6px !important;
-}
-
-header h1,
-header span {
-  color: var(--w95-title-text) !important;
-}
-
-/* Панели */
-.bg-zinc-900,
-.bg-zinc-800,
-.bg-zinc-700,
-.bg-zinc-950 {
-  background: var(--w95-window) !important;
-  border-top: 2px solid var(--w95-window-light) !important;
-  border-left: 2px solid var(--w95-window-light) !important;
-  border-right: 2px solid #000 !important;
-  border-bottom: 2px solid #000 !important;
-  border-radius: 0 !important;
-}
-
-/* Кнопки */
 button {
-  background: #181818 !important;
-  color: var(--w95-text) !important;
-  border-top: 2px solid var(--w95-window-light) !important;
-  border-left: 2px solid var(--w95-window-light) !important;
-  border-right: 2px solid #000 !important;
-  border-bottom: 2px solid #000 !important;
-  border-radius: 0 !important;
-  font-size: 11px !important;
-  padding: 2px 8px !important;
+  background:#181818;
+  border:2px solid #000;
+  color:#e5e5e5;
+  margin:4px 0;
 }
-
-button:active {
-  border-top: 2px solid #000 !important;
-  border-left: 2px solid #000 !important;
-  border-right: 2px solid var(--w95-window-light) !important;
-  border-bottom: 2px solid var(--w95-window-light) !important;
-}
-
-/* Инпуты */
-input {
-  background: #141414 !important;
-  color: var(--w95-text) !important;
-  border: 2px solid #000 !important;
-  padding: 2px 4px !important;
-  font-size: 11px !important;
-}
-
-/* Лог */
-#log {
-  background: #050505 !important;
-  color: var(--w95-text) !important;
-  border: 2px solid #000 !important;
-  font-family: "Lucida Console", monospace !important;
-  font-size: 11px !important;
-}
-
-/* Стат-бары */
 .bar {
-  height: 8px;
-  border-radius: 9999px;
-  background: #050505 !important;
-  border: 1px solid #000 !important;
+  height:8px;
+  background:#050505;
+  border:1px solid #000;
 }
-
 .bar-inner {
-  height: 8px;
-  border-radius: 9999px;
-  transition: width 0.25s linear;
-  background: #3f7ad8 !important;
-  border-right: 1px solid #000 !important;
+  height:8px;
+  background:#3f7ad8;
 }
-
-/* Текстовые цвета поверх Tailwind */
-.text-zinc-100,
-.text-zinc-200,
-.text-zinc-300,
-.text-zinc-400 {
-  color: var(--w95-text) !important;
-}
-
-/* Лог — отключаем лигатуры */
-.log {
-  font-variant-ligatures: none;
-}
-
-/* Динамическое состояние по данным из JS (день/ночь, настроение, здоровье) */
-
-body[data-time="night"] {
-  background: radial-gradient(circle at top, #111 0%, #000 60%, #000 100%) !important;
-}
-
-body[data-mood="low"] {
-  background-color: #020207 !important;
-}
-
-body[data-mood="high"] {
-  background-color: #080810 !important;
-}
-
-body[data-health="fragile"] #log {
-  border-color: #5a0000 !important;
-}
-
-body[data-energy="low"] .max-w-5xl {
-  filter: brightness(0.85);
-}
-
-body[data-time="night"][data-mood="low"] {
-  background: radial-gradient(circle at top, #050505 0%, #000 40%, #000 100%) !important;
-}
-
-
-/* --- ДОБАВЛЕНО: шёпоты/вторжения --- */
-#log .whisper { color: #8b8ba8 !important; font-style: italic; opacity: 0.9; }
-/* лёгкая "усталость" интерфейса (можно усиливать позже) */
-body.ui-fracture .max-w-5xl { filter: brightness(0.92) contrast(1.02); }
-
