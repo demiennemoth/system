@@ -77,7 +77,20 @@
                 <button data-speed="4" class="speed px-2 py-1 rounded-lg bg-zinc-800">4×</button>
                 <button id="btn-pause" class="px-2 py-1 rounded-lg bg-zinc-800">⏸</button>
               </div>
+            
+            <div class="px-3 py-2 bg-zinc-900 rounded-2xl">
+              <div class="text-xs text-zinc-400">Текущее</div>
+              <div class="text-sm font-semibold">
+                <span id="activity-name" class="text-zinc-100">—</span>
+              </div>
+              <div class="text-xs text-zinc-400 mt-1">
+                Осталось: <span id="activity-left" class="text-zinc-200">—</span>
+              </div>
+              <div class="bar mt-2">
+                <div id="activity-bar" class="bar-inner" style="width:0%"></div>
+              </div>
             </div>
+</div>
           </div>
 
           <!-- Контейнеры для статов (JS сам туда всё вставит) -->
