@@ -26,7 +26,7 @@ body{
   margin:0;
   color:var(--text);
   font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif;
-  overflow:visible;
+  overflow:hidden;
   background:#000;
   background-image: image-set(
     url("images/soil.webp") type("image/webp"),
@@ -53,7 +53,8 @@ body::before{
   flex:1; min-height:0;
   display:grid; grid-template-columns:1.75fr 1fr; gap:14px;
 }
-.col{min-height:0; display:flex; flex-direction:column; gap:12px; overflow:auto; padding-right:4px}
+.col{min-height:0; display:flex; flex-direction:column; gap:12px}
+.col.left{overflow:auto; padding-right:4px}
 .card{
   position:relative;
   background:linear-gradient(180deg,var(--panel),var(--panel2));
@@ -63,13 +64,13 @@ body::before{
   backdrop-filter:blur(10px);
   padding:12px 14px;
   min-width:0;
-  overflow:visible;
+  overflow:hidden;
   overflow-wrap:anywhere;
 }
 .label{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em}
 .value{font-size:16px; font-weight:900; margin-top:6px}
 .small{color:var(--muted); font-size:12px; margin-top:4px}
-.bar{height:10px; margin-top:10px; border-radius:999px; overflow:visible; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35)}
+.bar{height:10px; margin-top:10px; border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35)}
 .barInner{height:100%; width:0%; background:linear-gradient(90deg, rgba(230,230,255,.22), rgba(150,150,210,.62))}
 .quoteText{color:rgba(240,240,252,.90); font-style:italic}
 .pTitle{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px}
@@ -79,7 +80,7 @@ body::before{
 .pMeta{margin-top:8px; display:grid; gap:5px; color:rgba(235,235,250,.84); font-size:13px}
 .pFoot{margin-top:8px; color:rgba(215,215,235,.75); font-size:13px}
 .dennisImg{width:100%; max-width:220px; height:auto; display:block; filter:drop-shadow(0 16px 34px rgba(0,0,0,.70))}
-.voice{overflow:visible; flex:1; min-height:0; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
+.voice{overflow:hidden; flex:1; min-height:0; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
 .log{width:100%; height:100%; min-height:0; overflow:auto; padding:8px 10px; border-radius:14px; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.10);
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.4}
 .whisper{color:rgba(205,205,230,.72); font-style:italic}
@@ -163,7 +164,7 @@ button:active{transform:translateY(0) scale(.99)}
 .ghostLayer{
   position:fixed; inset:0; z-index:1;
   pointer-events:none;
-  overflow:visible;
+  overflow:hidden;
 }
 .ghostWord{
   position:absolute;
@@ -232,12 +233,18 @@ button:active{transform:translateY(0) scale(.99)}
 /* -------------------------------------------------------------- */
 
 
-.factsList{display:grid;gap:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+@media (max-width:900px){
+  .col.left{overflow:visible; padding-right:0}
+}
+
+
+.factsList{display:grid;gap:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.45;color:rgba(240,240,252,.88)}
 .factRow{display:grid;grid-template-columns:140px 1fr;gap:8px}
 .factKey{color:rgba(220,220,235,.65)}
 .factVal{color:rgba(245,245,255,.95)}
-.helplessText{font-size:14px;line-height:1.55}
-.forHerLine{font-size:18px;font-weight:700}
+.helplessText{font-size:14px;line-height:1.55;color:rgba(240,240,252,.92)}
+.helplessText .line{margin:2px 0}
+.forHerLine{font-family:"Cormorant Garamond","IBM Plex Serif",serif;font-size:18px;font-weight:700;letter-spacing:.01em;color:rgba(245,245,255,.92)}
 
 </style>
 </head>
@@ -256,7 +263,19 @@ button:active{transform:translateY(0) scale(.99)}
 
   <section class="grid">
     <div class="col left">
+      <div class="card profile">
+        <div class="pTitle">Профиль</div>
 
+      <div class="card current">
+        <div class="label">Текущее</div>
+        <div class="value" id="activityName">—</div>
+        <div class="small">Осталось: <span id="activityLeft">—</span></div>
+        <div class="bar"><div id="activityBar" class="barInner"></div></div>
+      </div>
+
+      <div class="card quote">
+        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+      
       <div class="card facts">
         <div class="pTitle">Факты</div>
         <div class="factsList">
@@ -280,10 +299,9 @@ button:active{transform:translateY(0) scale(.99)}
       <div class="card forHer">
         <div class="forHerLine">Ты была рядом.</div>
       </div>
+</div>
 
-<div class="card profile">
-        <div class="pTitle">Профиль</div>
-        <div class="profileGrid">
+      <div class="profileGrid">
           <div>
             <div class="pName">Дэннис</div>
             <div class="pQuote">«Я здесь.»</div>
@@ -293,18 +311,6 @@ button:active{transform:translateY(0) scale(.99)}
                 <div><b>Адрес:</b> Королева 4а</div>
                 <div><b>Безопасное место:</b> подушка возле головы хозяйки</div>
             </div>
-      <div class="card current">
-        <div class="label">Текущее</div>
-        <div class="value" id="activityName">—</div>
-        <div class="small">Осталось: <span id="activityLeft">—</span></div>
-        <div class="bar"><div id="activityBar" class="barInner"></div></div>
-      </div>
-
-      <div class="card quote">
-        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
-      </div>
-
-      
             <div class="pFoot">Он не стал легче. Он остался.</div>
           </div>
           <div>
