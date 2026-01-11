@@ -26,7 +26,7 @@ body{
   margin:0;
   color:var(--text);
   font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif;
-  overflow:hidden;
+  overflow:visible;
   background:#000;
   background-image: image-set(
     url("images/soil.webp") type("image/webp"),
@@ -53,7 +53,7 @@ body::before{
   flex:1; min-height:0;
   display:grid; grid-template-columns:1.75fr 1fr; gap:14px;
 }
-.col{min-height:0; display:flex; flex-direction:column; gap:12px}
+.col{min-height:0; display:flex; flex-direction:column; gap:12px; overflow:auto; padding-right:4px}
 .card{
   position:relative;
   background:linear-gradient(180deg,var(--panel),var(--panel2));
@@ -63,13 +63,13 @@ body::before{
   backdrop-filter:blur(10px);
   padding:12px 14px;
   min-width:0;
-  overflow:hidden;
+  overflow:visible;
   overflow-wrap:anywhere;
 }
 .label{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em}
 .value{font-size:16px; font-weight:900; margin-top:6px}
 .small{color:var(--muted); font-size:12px; margin-top:4px}
-.bar{height:10px; margin-top:10px; border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35)}
+.bar{height:10px; margin-top:10px; border-radius:999px; overflow:visible; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.35)}
 .barInner{height:100%; width:0%; background:linear-gradient(90deg, rgba(230,230,255,.22), rgba(150,150,210,.62))}
 .quoteText{color:rgba(240,240,252,.90); font-style:italic}
 .pTitle{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px}
@@ -79,7 +79,7 @@ body::before{
 .pMeta{margin-top:8px; display:grid; gap:5px; color:rgba(235,235,250,.84); font-size:13px}
 .pFoot{margin-top:8px; color:rgba(215,215,235,.75); font-size:13px}
 .dennisImg{width:100%; max-width:220px; height:auto; display:block; filter:drop-shadow(0 16px 34px rgba(0,0,0,.70))}
-.voice{overflow:hidden; flex:1; min-height:0; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
+.voice{overflow:visible; flex:1; min-height:0; border-color:rgba(200,200,255,.18); box-shadow:0 18px 65px rgba(0,0,0,.72), 0 0 34px var(--glow)}
 .log{width:100%; height:100%; min-height:0; overflow:auto; padding:8px 10px; border-radius:14px; background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.10);
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.4}
 .whisper{color:rgba(205,205,230,.72); font-style:italic}
@@ -163,7 +163,7 @@ button:active{transform:translateY(0) scale(.99)}
 .ghostLayer{
   position:fixed; inset:0; z-index:1;
   pointer-events:none;
-  overflow:hidden;
+  overflow:visible;
 }
 .ghostWord{
   position:absolute;
@@ -232,63 +232,12 @@ button:active{transform:translateY(0) scale(.99)}
 /* -------------------------------------------------------------- */
 
 
-/* --- factual spine: факты / беспомощность / для нее --- */
-.col.left{overflow:auto; padding-right:2px}
-.col.left::-webkit-scrollbar{width:10px}
-.col.left::-webkit-scrollbar-thumb{background:rgba(255,255,255,.10); border-radius:999px}
-.col.left::-webkit-scrollbar-track{background:rgba(0,0,0,.10)}
-
-.card.facts{
-  background:rgba(0,0,0,.70);
-  border-color:rgba(255,255,255,.10);
-  backdrop-filter:blur(6px);
-}
-.facts .pTitle{margin-bottom:10px}
-.factsList{
-  margin:0; padding:0;
-  display:grid; gap:8px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:12.5px;
-  line-height:1.45;
-  color:rgba(240,240,252,.88);
-}
-.factRow{
-  display:grid;
-  grid-template-columns: 128px 1fr;
-  gap:10px;
-}
-.factKey{color:rgba(220,220,235,.66)}
-.factVal{color:rgba(245,245,255,.92)}
-.card.helpless{
-  background:rgba(0,0,0,.64);
-  border-color:rgba(255,255,255,.10);
-}
-.helplessText{
-  margin:0;
-  font-size:14px;
-  line-height:1.55;
-  color:rgba(240,240,252,.92);
-}
-.helplessText .line{display:block; margin:2px 0}
-.card.forHer{
-  background:transparent;
-  border-color:rgba(255,255,255,.06);
-}
-.forHerLine{
-  margin:0;
-  font-family:"Cormorant Garamond","IBM Plex Serif",serif;
-  font-size:18px;
-  font-weight:700;
-  letter-spacing:.01em;
-  color:rgba(245,245,255,.92);
-  text-shadow:0 2px 18px rgba(0,0,0,.70);
-}
-/* keep on small screens */
-@media (max-width:900px){
-  .col.left{overflow:visible; padding-right:0}
-  .factRow{grid-template-columns: 1fr}
-}
-/* --- end factual spine --- */
+.factsList{display:grid;gap:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.factRow{display:grid;grid-template-columns:140px 1fr;gap:8px}
+.factKey{color:rgba(220,220,235,.65)}
+.factVal{color:rgba(245,245,255,.95)}
+.helplessText{font-size:14px;line-height:1.55}
+.forHerLine{font-size:18px;font-weight:700}
 
 </style>
 </head>
@@ -307,43 +256,32 @@ button:active{transform:translateY(0) scale(.99)}
 
   <section class="grid">
     <div class="col left">
-      <div class="card current">
-        <div class="label">Текущее</div>
-        <div class="value" id="activityName">—</div>
-        <div class="small">Осталось: <span id="activityLeft">—</span></div>
-        <div class="bar"><div id="activityBar" class="barInner"></div></div>
-      </div>
-
-      <div class="card quote">
-        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
-      
 
       <div class="card facts">
         <div class="pTitle">Факты</div>
-        <div class="factsList" role="list">
-          <div class="factRow" role="listitem"><div class="factKey">Диагноз</div><div class="factVal">кальцивирус</div></div>
-          <div class="factRow" role="listitem"><div class="factKey">До операции</div><div class="factVal">не мог есть, был истощён</div></div>
-          <div class="factRow" role="listitem"><div class="factKey">Операция</div><div class="factVal">удалили все зубы</div></div>
-          <div class="factRow" role="listitem"><div class="factKey">После</div><div class="factVal">боль, попытки поесть не получались</div></div>
-          <div class="factRow" role="listitem"><div class="factKey">Смерть</div><div class="factVal">в муках</div></div>
+        <div class="factsList">
+          <div class="factRow"><div class="factKey">Диагноз</div><div class="factVal">кальцивирус</div></div>
+          <div class="factRow"><div class="factKey">До операции</div><div class="factVal">не мог есть, был истощён</div></div>
+          <div class="factRow"><div class="factKey">Операция</div><div class="factVal">удалили все зубы</div></div>
+          <div class="factRow"><div class="factKey">После</div><div class="factVal">боль, попытки поесть не получались</div></div>
+          <div class="factRow"><div class="factKey">Смерть</div><div class="factVal">в муках</div></div>
         </div>
       </div>
 
       <div class="card helpless">
         <div class="pTitle">Мы не знали</div>
-        <p class="helplessText">
-          <span class="line">Мы не знали, что делать.</span>
-          <span class="line">Мы пробовали всё, что могли.</span>
-          <span class="line">Это не помогло.</span>
-        </p>
+        <div class="helplessText">
+          <div class="line">Мы не знали, что делать.</div>
+          <div class="line">Мы пробовали всё, что могли.</div>
+          <div class="line">Это не помогло.</div>
+        </div>
       </div>
 
       <div class="card forHer">
-        <p class="forHerLine">Ты была рядом.</p>
+        <div class="forHerLine">Ты была рядом.</div>
       </div>
-</div>
 
-      <div class="card profile">
+<div class="card profile">
         <div class="pTitle">Профиль</div>
         <div class="profileGrid">
           <div>
@@ -355,6 +293,18 @@ button:active{transform:translateY(0) scale(.99)}
                 <div><b>Адрес:</b> Королева 4а</div>
                 <div><b>Безопасное место:</b> подушка возле головы хозяйки</div>
             </div>
+      <div class="card current">
+        <div class="label">Текущее</div>
+        <div class="value" id="activityName">—</div>
+        <div class="small">Осталось: <span id="activityLeft">—</span></div>
+        <div class="bar"><div id="activityBar" class="barInner"></div></div>
+      </div>
+
+      <div class="card quote">
+        <div class="quoteText">Он умер в боли. Но любовь была до конца.</div>
+      </div>
+
+      
             <div class="pFoot">Он не стал легче. Он остался.</div>
           </div>
           <div>
