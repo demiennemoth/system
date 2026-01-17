@@ -703,5 +703,45 @@ Promise.all([
 
 showToast("Он здесь.");
 </script>
+
+<!-- === protection layer === -->
+<script>
+// disable context menu, selection, drag
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
+// block common shortcuts
+document.addEventListener("keydown", e => {
+  const blocked =
+    e.key === "F12" ||
+    (e.ctrlKey && ["s","u","c","p","i","j"].includes(e.key.toLowerCase())) ||
+    (e.metaKey && ["s","c"].includes(e.key.toLowerCase()));
+  if (blocked){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+
+// devtools detection → blur
+let devtoolsOpen = false;
+const threshold = 160;
+setInterval(() => {
+  const w = window.outerWidth - window.innerWidth;
+  const h = window.outerHeight - window.innerHeight;
+  const opened = w > threshold || h > threshold;
+  if (opened !== devtoolsOpen){
+    devtoolsOpen = opened;
+    document.body.style.filter = opened ? "blur(6px)" : "";
+  }
+}, 500);
+
+// fake clipboard
+document.addEventListener("copy", e => {
+  e.preventDefault();
+  e.clipboardData.setData("text/plain", "не трогай.");
+});
+</script>
+
 </body>
 </html>
